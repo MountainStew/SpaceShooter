@@ -10,6 +10,7 @@ var Asteroid = function(rockType) {
   var mesh = new THREE.Object3D(), self = this
 
   // Speed of motion and rotation
+
   mesh.velocity = Math.random() * 2 + 2
   mesh.vRotation = new THREE.Vector3(Math.random(), Math.random(), Math.random())
 

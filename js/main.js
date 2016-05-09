@@ -6,12 +6,11 @@ var World = require('three-world'),
     Shot = require('./shot')
 
 var NUM_ASTEROIDS = 10
-
+var updateVelocity = 0;
 function render() {
   cam.position.z -= 1
   tunnel.update(cam.position.z)
   player.update()
-
   for(var i=0; i<shots.length; i++) {
     if(!shots[i].update(cam.position.z)) {
       World.getScene().remove(shots[i].getMesh())
@@ -20,9 +19,13 @@ function render() {
   }
 
   for(var i=0; i<NUM_ASTEROIDS; i++) {
-    if(!asteroids[i].loaded) continue
+    if(updateVelocity < .005)
+      updateVelocity += .00001
 
+    if(!asteroids[i].loaded) continue
     asteroids[i].update(cam.position.z)
+    asteroids[i].getMesh().velocity += updateVelocity
+    console.log(asteroids[i].getMesh().velocity)
     if(player.loaded && player.bbox.isIntersectionBox(asteroids[i].bbox)) {
       asteroids[i].reset(cam.position.z)
       health -= 20
