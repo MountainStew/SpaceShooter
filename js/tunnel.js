@@ -4,7 +4,7 @@ var Tunnel = function() {
   var tunnel = new THREE.Object3D(), meshes = []
 
   meshes.push(new THREE.Mesh(
-    new THREE.CylinderGeometry(100, 100, 5000, 24, 24, true),
+    new THREE.CylinderGeometry(100, 100, 50000, 24, 24, true),
     new THREE.MeshBasicMaterial({
       map: THREE.ImageUtils.loadTexture('images/space.jpg', null, function(tex) {
         tex.wrapS = tex.wrapT = THREE.RepeatWrapping

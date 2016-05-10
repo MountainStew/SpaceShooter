@@ -7,6 +7,7 @@ var World = require('three-world'),
 
 var NUM_ASTEROIDS = 10
 var updateVelocity = 0;
+
 function render() {
   cam.position.z -= 1
   tunnel.update(cam.position.z)
@@ -21,14 +22,12 @@ function render() {
   for(var i=0; i<NUM_ASTEROIDS; i++) {
     if(updateVelocity < .005)
       updateVelocity += .00001
-
     if(!asteroids[i].loaded) continue
     asteroids[i].update(cam.position.z)
     asteroids[i].getMesh().velocity += updateVelocity
-    console.log(asteroids[i].getMesh().velocity)
     if(player.loaded && player.bbox.isIntersectionBox(asteroids[i].bbox)) {
       asteroids[i].reset(cam.position.z)
-      health -= 20
+      health -= 10
       document.getElementById("health").textContent = health
       if(health < 1) {
         World.pause()
@@ -40,6 +39,16 @@ function render() {
     for(var j=0; j<shots.length; j++) {
       if(asteroids[i].bbox.isIntersectionBox(shots[j].bbox)) {
         score += 10
+        //console.log(score)
+        //if(score % 50 == 0) {
+        //  console.log("here");
+        //  health = 100
+        //}
+        var audio = document.createElement('audio');
+        var source = document.createElement('source');
+        source.src = '/Users/Stewart/Documents/Projects/git/SpaceShooter/SFX_Explosion_01.wav';
+        audio.appendChild(source);
+        audio.play();
         document.getElementById("score").textContent = score
         asteroids[i].reset(cam.position.z)
         World.getScene().remove(shots[j].getMesh())
@@ -87,14 +96,18 @@ window.addEventListener('keyup', function(e) {
 
 window.addEventListener('keydown', function(e) {
   if(e.keyCode == 37) {
-    cam.position.x -= 5
+    if(cam.position.x>=-74)
+      cam.position.x -= 5
   } else if(e.keyCode == 39) {
-    cam.position.x += 5
+    if(cam.position.x<=74)
+      cam.position.x += 5
   }
 
   if(e.keyCode == 38) {
-    cam.position.y += 5
+    if(cam.position.y<=90)
+      cam.position.y += 5
   } else if(e.keyCode == 40) {
-    cam.position.y -= 5
+    if(cam.position.y>=-68)
+      cam.position.y -= 5
   }
 })
