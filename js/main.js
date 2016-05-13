@@ -27,6 +27,8 @@ function render() {
     asteroids[i].getMesh().velocity += updateVelocity
     if(player.loaded && player.bbox.isIntersectionBox(asteroids[i].bbox)) {
       asteroids[i].reset(cam.position.z)
+      var audio = document.getElementById("audioDamage");
+      audio.play();
       health -= 10
       document.getElementById("health").textContent = health
       if(health < 1) {
@@ -44,10 +46,7 @@ function render() {
         //  console.log("here");
         //  health = 100
         //}
-        var audio = document.createElement('audio');
-        var source = document.createElement('source');
-        source.src = '/Users/Stewart/Documents/Projects/git/SpaceShooter/SFX_Explosion_01.wav';
-        audio.appendChild(source);
+        var audio = document.getElementById("audio");
         audio.play();
         document.getElementById("score").textContent = score
         asteroids[i].reset(cam.position.z)
