@@ -12,7 +12,6 @@ var gameover = document.getElementById("gameover")
 var audioShot = document.getElementById("shot")
 var hit = document.getElementById("hit")
 var damage = document.getElementById("damage")
-var damage = document.getElementById("damage")
 var bg = document.getElementById("bg")
 bg.loop = true
 bg.play()
