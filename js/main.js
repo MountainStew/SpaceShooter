@@ -6,7 +6,17 @@ var World = require('three-world'),
     Shot = require('./shot')
 
 var NUM_ASTEROIDS = 10
-var updateVelocity = 0;
+var updateVelocity = 0
+
+var gameover = document.getElementById("gameover")
+var audioShot = document.getElementById("shot")
+var hit = document.getElementById("hit")
+var damage = document.getElementById("damage")
+var damage = document.getElementById("damage")
+var bg = document.getElementById("bg")
+bg.loop = true
+bg.play()
+
 
 function render() {
   cam.position.z -= 1
@@ -27,13 +37,23 @@ function render() {
     asteroids[i].getMesh().velocity += updateVelocity
     if(player.loaded && player.bbox.isIntersectionBox(asteroids[i].bbox)) {
       asteroids[i].reset(cam.position.z)
-      var audio = document.getElementById("audioDamage");
-      audio.play();
+
+      damage.play();
       health -= 10
       document.getElementById("health").textContent = health
       if(health < 1) {
-        World.pause()
-        alert("Game over")
+
+        document.getElementById("gameovertext").textContent = "Game Over"
+        gameover.play()
+
+
+        for(i=0;i<1000000000; i++){
+
+          World.pause()
+
+        }
+
+
         window.location.reload()
       }
     }
@@ -46,8 +66,8 @@ function render() {
         //  console.log("here");
         //  health = 100
         //}
-        var audio = document.getElementById("audio");
-        audio.play();
+
+        hit.play();
         document.getElementById("score").textContent = score
         asteroids[i].reset(cam.position.z)
         World.getScene().remove(shots[j].getMesh())
@@ -80,12 +100,16 @@ World.getScene().fog = new THREE.FogExp2(0x0000022, 0.00125)
 
 World.start()
 
+
+
+
 window.addEventListener('keyup', function(e) {
-  switch(e.keyCode) {
-    case 32: // Space
+ switch(e.keyCode) {
+    case 32:                  // Space
       var shipPosition = cam.position.clone()
       shipPosition.sub(new THREE.Vector3(0, 25, 100))
 
+      audioShot.play();
       var shot = new Shot(shipPosition)
       shots.push(shot)
       World.add(shot.getMesh())
@@ -94,19 +118,30 @@ window.addEventListener('keyup', function(e) {
 })
 
 window.addEventListener('keydown', function(e) {
-  if(e.keyCode == 37) {
-    if(cam.position.x>=-74)
-      cam.position.x -= 5
-  } else if(e.keyCode == 39) {
-    if(cam.position.x<=74)
-      cam.position.x += 5
+ /* if(e.keyCode == 32){
+     audioShot.play();
+  }*/
+
+
+  if(e.keyCode == 37) { //left
+    if(cam.position.x>=-74){
+      cam.position.x -= 4
+    }
+  }else if(e.keyCode == 39 ) { //right
+    if(cam.position.x<=74){
+      cam.position.x += 4
+    }
   }
 
   if(e.keyCode == 38) {
-    if(cam.position.y<=90)
-      cam.position.y += 5
-  } else if(e.keyCode == 40) {
-    if(cam.position.y>=-68)
-      cam.position.y -= 5
+    if(cam.position.y <= 90){ //up
+      cam.position.y += 4
+    }
+  } else if(e.keyCode == 40) { //down
+    if(cam.position.y >= -68){
+      cam.position.y -= 4
+    }
   }
+
+
 })

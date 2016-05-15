@@ -29,12 +29,16 @@
   </style>
 </head>
 <body>
-<audio id="audio" src="/SpaceShooter/SFX_Explosion_01.wav"></audio>
-<audio id="audioDamage" src="/SpaceShooter/damage.mp3"></audio>
+<audio id="hit" src="SFX_Explosion_01.wav"></audio>
+<audio id="damage" src="damage.mp3"></audio>
+<audio id="shot" src="whoosh.mp3"></audio>
+<audio id="gameover" src="gameover.mp3"></audio>
+<audio id="bg" src="bg.mp3"></audio>
   <div id="bar">
     Health: <span id="health">100</span>%
     &nbsp;&nbsp;
     Score: <span id="score">0</span>
+    <br><br><span id="gameovertext"> </span>
   </div>
   <script src="app.js"></script>
 </body>
